@@ -68,11 +68,18 @@ def save():
 # ---------------------------- SEARCH FOR PASSWORD ------------------------------- #
 
 def search_password():
-    search_term = website_entry.get()
-    with open("data.json", "r") as data_file:
-        data = json.load(data_file)
-    result = data[search_term]
-    messagebox.showwarning(title=f"{search_term}", message=f"Email: {result['email']}\nPassword: {result['password']}")
+    try:
+        search_term = website_entry.get()
+        with open("data.json", "r") as data_file:
+            data = json.load(data_file)
+        result = data[search_term]
+        messagebox.showwarning(title=f"{search_term}", message=f"Email: {result['email']}\nPassword: {result['password']}")
+    except KeyError:
+        if website_entry.get() == "":
+            messagebox.showwarning(title="Oops", message="Please don't leave the search field empty!")
+        elif website_entry.get() not in data:
+            messagebox.showwarning(title="Oops", message="Plh field empty!")
+
 
 # ---------------------------- UI SETUP ------------------------------- #
 
